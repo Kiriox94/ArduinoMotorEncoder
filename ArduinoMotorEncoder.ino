@@ -12,7 +12,7 @@ volatile byte laststate = 0;  // etat précédent de l'encodeur
 void setup() {
   setupMotors();
   pinMode(encoderA, INPUT_PULLUP);
-  pinMode(encoderA, INPUT_PULLUP);
+  pinMode(encoderB, INPUT_PULLUP);
   attachInterrupt(0,counter, CHANGE);
 
   Serial.begin(9600); // Définit vitesse de transmission série
