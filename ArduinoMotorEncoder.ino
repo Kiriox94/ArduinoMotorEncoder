@@ -3,6 +3,8 @@
 #define encoderA 2
 #define encoderB 4
 
+const int ticksForATurn = 460;
+
 volatile int count = 0; // comptage de tick d'encoder  qui sera incrémenté sur interruption " On change " sur l'interruption matériel 0 qui se fait sur le pin 2
 volatile int turns = 0; // vitesse du moteur 
 volatile byte laststate = 0;  // etat précédent de l'encodeur 
@@ -19,9 +21,9 @@ void setup() {
 }
 
 void loop() {
-  if(count >= 660) {
-    turns++;
-  }
+  // if(count >= 460) {
+  //   turns++;
+  // }
 
   if(turns >= 1) {
     moveMotors(motorStates::Stop);
@@ -39,6 +41,11 @@ void counter()
   if( state!=laststate)
   {
     (((state&(1<<encoderA))>>encoderA)^((state&(1<<encoderA))>>encoderA))?count--:count++;
+
+    if(count >= ticksForATurn) {
+      turns++;
+    }
+
     laststate=state;
   }
 }
